@@ -7,16 +7,7 @@
  */
 
 import React from 'react';
-import {
-  Button,
-  Linking,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 const App = () => {
   return (
