@@ -22,7 +22,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles}>
-        <Text style={styles.text}>Hello React Native</Text>
+        <Text style={styles.text}>Flex</Text>
         <Button
           title="My Github"
           onPress={() => Linking.openURL('https://github.com/hachi-nico')}
