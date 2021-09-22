@@ -11,7 +11,6 @@ import {
   FlatList,
   RefreshControl,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -24,6 +23,7 @@ const App = () => {
     {item: 'fo'},
     {item: 'fu'},
     {item: 'bu'},
+    {item: 'gu'},
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -42,6 +42,9 @@ const App = () => {
   return (
     <SafeAreaView>
       <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={data}
+        renderItem={renderItem}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -49,9 +52,6 @@ const App = () => {
             colors={['red', 'blue']}
           />
         }
-        keyExtractor={(item, index) => index.toString()}
-        data={data}
-        renderItem={renderItem}
       />
     </SafeAreaView>
   );
