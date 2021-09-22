@@ -1,29 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState} from 'react';
 import {
   FlatList,
   RefreshControl,
   SafeAreaView,
+  SectionList,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
 const App = () => {
+  // const [data, setData] = useState([{item: 'fi'}, {item: 'fa'}]);
   const [data, setData] = useState([
-    {item: 'fi'},
-    {item: 'fa'},
-    {item: 'fo'},
-    {item: 'fu'},
-    {item: 'bu'},
-    {item: 'gu'},
+    {
+      item: 'cat',
+      data: ['kitty', 'garfield'], // key name must named 'data'
+    },
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -33,15 +25,18 @@ const App = () => {
     setRefreshing(false);
   };
 
-  const renderItem = ({item}) => (
+  // dont use anonymous func for performance reason
+  // desturcture obj must named 'item' and 'section'
+  const renderItem = ({item}) => <Text style={styles.text}>{item}</Text>;
+  const renderSectionHeader = ({section}) => (
     <View style={styles.container}>
-      <Text style={styles.text}>{item.item}</Text>
+      <Text style={styles.text}>{section.item}</Text>
     </View>
   );
 
   return (
     <SafeAreaView>
-      <FlatList
+      {/* <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={data}
         renderItem={renderItem}
@@ -49,8 +44,17 @@ const App = () => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['red', 'blue']}
+            colors={['yellow', 'green']}
           />
+        }
+      /> */}
+      <SectionList
+        keyExtractor={(item, index) => item + index}
+        sections={data}
+        renderItem={renderItem}
+        renderSectionHeader={renderSectionHeader}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
     </SafeAreaView>
