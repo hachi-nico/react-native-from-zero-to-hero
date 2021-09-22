@@ -8,6 +8,7 @@
 
 import React, {useState} from 'react';
 import {
+  FlatList,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -18,38 +19,40 @@ import {
 
 const App = () => {
   const [data, setData] = useState([
-    {id: 1, item: 'fi'},
-    {id: 2, item: 'fa'},
-    {id: 3, item: 'fo'},
-    {id: 4, item: 'fu'},
-    {id: 5, item: 'bu'},
+    {item: 'fi'},
+    {item: 'fa'},
+    {item: 'fo'},
+    {item: 'fu'},
+    {item: 'bu'},
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    setData([...data, {id: new Date(), item: 'new item'}]);
+    setData([...data, {item: 'new item'}]);
     setRefreshing(false);
   };
 
+  const renderItem = ({item}) => (
+    <View style={styles.container}>
+      <Text style={styles.text}>{item.item}</Text>
+    </View>
+  );
+
   return (
-    <SafeAreaView style={styles.outerContainer}>
-      <ScrollView
+    <SafeAreaView>
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
             colors={['red', 'blue']}
           />
-        }>
-        {data
-          .map(obj => (
-            <View key={obj.id} style={styles.container}>
-              <Text style={styles.text}>{obj.item}</Text>
-            </View>
-          ))
-          .reverse()}
-      </ScrollView>
+        }
+        keyExtractor={(item, index) => index.toString()}
+        data={data}
+        renderItem={renderItem}
+      />
     </SafeAreaView>
   );
 };
