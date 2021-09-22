@@ -1,81 +1,64 @@
 import React, {useState} from 'react';
 import {
+  Button,
   FlatList,
+  Keyboard,
   RefreshControl,
   SafeAreaView,
   SectionList,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
 const App = () => {
-  // const [data, setData] = useState([{item: 'fi'}, {item: 'fa'}]);
-  const [data, setData] = useState([
-    {
-      item: 'cat',
-      data: ['kitty', 'garfield'], // key name must named 'data'
-    },
-  ]);
-  const [refreshing, setRefreshing] = useState(false);
+  const [name, onChangeText] = useState('');
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setData([...data, {item: 'new item'}]);
-    setRefreshing(false);
-  };
-
-  // dont use anonymous func for performance reason
-  // desturcture obj must named 'item' and 'section'
-  const renderItem = ({item}) => <Text style={styles.text}>{item}</Text>;
-  const renderSectionHeader = ({section}) => (
-    <View style={styles.container}>
-      <Text style={styles.text}>{section.item}</Text>
-    </View>
+  const DismissKeyboard = ({children}) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
   );
 
   return (
-    <SafeAreaView>
-      {/* <FlatList
-        keyExtractor={(item, index) => index.toString()}
-        data={data}
-        renderItem={renderItem}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={['yellow', 'green']}
-          />
-        }
-      /> */}
-      <SectionList
-        keyExtractor={(item, index) => item + index}
-        sections={data}
-        renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
-    </SafeAreaView>
+    <DismissKeyboard>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.text}>Your Name is</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="insert your name here"
+          onChangeText={onChangeText}
+          value={name}
+        />
+        <View style={styles.button}>
+          <Button title="submit" />
+        </View>
+      </SafeAreaView>
+    </DismissKeyboard>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-  },
   container: {
-    padding: 50,
-    backgroundColor: 'violet',
-    alignItems: 'center',
+    flex: 1,
+    margin: 20,
     justifyContent: 'center',
-    marginTop: 40,
+    alignItems: 'center',
   },
   text: {
-    fontSize: 50,
+    fontSize: 30,
+  },
+  input: {
+    width: 200,
+    borderBottomWidth: 2,
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: 20,
+    width: 200,
   },
 });
 
