@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
+  Alert,
   Button,
   Keyboard,
   SafeAreaView,
@@ -25,8 +26,20 @@ const App = () => {
     reset();
   };
   const onClear = () => {
-    setName('');
-    reset();
+    Alert.alert('Warning', 'are you sure to clear input', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Ok',
+        style: 'default',
+        onPress: () => {
+          setName('');
+          reset();
+        },
+      },
+    ]);
   };
 
   return (
