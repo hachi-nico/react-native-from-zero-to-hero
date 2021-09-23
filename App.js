@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {
   Button,
-  FlatList,
   Keyboard,
-  RefreshControl,
   SafeAreaView,
-  SectionList,
   StyleSheet,
   Text,
   TextInput,
@@ -14,29 +12,53 @@ import {
 } from 'react-native';
 
 const App = () => {
-  const [name, onChangeText] = useState('');
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: {errors},
+  } = useForm({mode: 'onBlur'});
 
-  const DismissKeyboard = ({children}) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      {children}
-    </TouchableWithoutFeedback>
-  );
+  const [name, setName] = useState('');
+  const onSubmit = ({nameInput}) => {
+    setName(nameInput);
+    reset();
+  };
+  const onClear = () => {
+    setName('');
+    reset();
+  };
 
   return (
-    <DismissKeyboard>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Your Name is</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="insert your name here"
-          onChangeText={onChangeText}
-          value={name}
+        <Text style={styles.text}>Your Name is {name}</Text>
+        <Controller
+          control={control}
+          rules={{required: true}}
+          name="nameInput"
+          defaultValue=""
+          render={({field: {onChange, value, onBlur}}) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="insert your name here"
+            />
+          )}
         />
+        {errors.nameInput && <Text>You must fill this form !!!</Text>}
+
         <View style={styles.button}>
-          <Button title="submit" />
+          <Button title="submit" onPress={handleSubmit(onSubmit)} />
+        </View>
+
+        <View style={styles.button}>
+          <Button title="clear" onPress={onClear} />
         </View>
       </SafeAreaView>
-    </DismissKeyboard>
+    </TouchableWithoutFeedback>
   );
 };
 
