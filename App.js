@@ -1,8 +1,10 @@
+import {inherits} from '@babel/types';
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   Alert,
   Button,
+  ImageBackground,
   Keyboard,
   SafeAreaView,
   StyleSheet,
@@ -10,6 +12,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
+  Image,
 } from 'react-native';
 
 const App = () => {
@@ -44,33 +47,45 @@ const App = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Your Name is {name}</Text>
-        <Controller
-          control={control}
-          rules={{required: true}}
-          name="nameInput"
-          defaultValue=""
-          render={({field: {onChange, value, onBlur}}) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="insert your name here"
-            />
-          )}
-        />
-        {errors.nameInput && <Text>You must fill this form !!!</Text>}
+      <ImageBackground
+        source={{
+          uri: 'https://image.freepik.com/free-vector/stylish-hexagonal-line-pattern-background_1017-19742.jpg',
+        }}
+        style={styles.imageBg}>
+        <SafeAreaView style={styles.container}>
+          <Image
+            source={{
+              uri: 'https://reactnative.dev/img/tiny_logo.png',
+            }}
+            style={styles.image}
+          />
+          <Text style={styles.text}>Your Name is {name}</Text>
+          <Controller
+            control={control}
+            rules={{required: true}}
+            name="nameInput"
+            defaultValue=""
+            render={({field: {onChange, value, onBlur}}) => (
+              <TextInput
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="insert your name here"
+              />
+            )}
+          />
+          {errors.nameInput && <Text>You must fill this form !!!</Text>}
 
-        <View style={styles.button}>
-          <Button title="submit" onPress={handleSubmit(onSubmit)} />
-        </View>
+          <View style={styles.button}>
+            <Button title="submit" onPress={handleSubmit(onSubmit)} />
+          </View>
 
-        <View style={styles.button}>
-          <Button title="clear" onPress={onClear} />
-        </View>
-      </SafeAreaView>
+          <View style={styles.button}>
+            <Button title="clear" onPress={onClear} />
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 };
@@ -94,6 +109,13 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     width: 200,
+  },
+  imageBg: {
+    flex: 1,
+  },
+  image: {
+    width: 100,
+    height: 100,
   },
 });
 
