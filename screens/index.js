@@ -1,3 +1,5 @@
 export * from './Home';
-export * from './Profile';
 export * from './Details';
+export * from './Payment';
+export * from './Gallery';
+export * from './Article';
