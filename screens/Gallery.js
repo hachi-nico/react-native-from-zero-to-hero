@@ -8,7 +8,7 @@ export const Gallery = () => {
     <SafeAreaView style={styles.container}>
       <Text>Gallery</Text>
       <Image
-        source={{uri: 'https://placekitten.com/200/300'}}
+        source={{uri: 'https://placekitten.com/400/300'}}
         style={{width: 400, height: 300}}
       />
     </SafeAreaView>
