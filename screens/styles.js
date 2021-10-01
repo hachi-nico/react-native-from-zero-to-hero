@@ -8,5 +8,6 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'BebasNeue-Regular',
+    fontSize: 40,
   },
 });
