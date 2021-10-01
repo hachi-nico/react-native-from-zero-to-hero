@@ -6,7 +6,7 @@ import {styles} from './styles';
 export const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text style={styles.text}>Home Screen</Text>
       <Button
         title="Details"
         onPress={() => navigation.navigate('Details', {name: 'Nico'})}
